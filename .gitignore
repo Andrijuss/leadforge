@@ -1,0 +1,7 @@
+node_modules/
+.env
+data/clients/*/screenshot.png
+data/clients/*/*.pdf
+data/backups/
+.local/
+*.log

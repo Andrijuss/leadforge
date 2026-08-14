@@ -1,0 +1,45 @@
+{
+  "agency": {
+    "name": "Andrijus",
+    "tagline": "Web design, sviluppo & automazione AI",
+    "website": "https://andrijus.example.com",
+    "email": "andrijusciric@gmail.com",
+    "phone": "",
+    "address": "",
+    "vat": ""
+  },
+  "services": [
+    {
+      "key": "redesign",
+      "label": "Restyling sito web",
+      "description": "Nuovo design moderno, responsive e ottimizzato per conversioni",
+      "price": 1200,
+      "currency": "EUR",
+      "unit": "una tantum"
+    },
+    {
+      "key": "seo",
+      "label": "Ottimizzazione SEO",
+      "description": "Sitemap, meta, contenuti, velocità e posizionamento locale",
+      "price": 350,
+      "currency": "EUR",
+      "unit": "una tantum"
+    },
+    {
+      "key": "automation",
+      "label": "Automazione processi con AI",
+      "description": "Assistenti AI e automazione di processi ripetitivi",
+      "price": 499,
+      "currency": "EUR",
+      "unit": "al mese"
+    },
+    {
+      "key": "maintenance",
+      "label": "Manutenzione & supporto",
+      "description": "Aggiornamenti, backup e assistenza",
+      "price": 50,
+      "currency": "EUR",
+      "unit": "al mese"
+    }
+  ]
+}

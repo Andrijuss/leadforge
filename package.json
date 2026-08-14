@@ -1,0 +1,26 @@
+{
+  "name": "leadforge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Leadforge - agente AI (deepseek v4 flash) per analisi siti web, email di outreach e preventivi PDF",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "analyze": "node scripts/fetch-site.mjs",
+    "screenshot": "node scripts/screenshot.mjs",
+    "pdf": "node scripts/html2pdf.mjs",
+    "send": "node scripts/send.mjs",
+    "backup": "bash scripts/backup.sh",
+    "client:new": "node scripts/client-new.mjs"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "nodemailer": "^9.0.5",
+    "puppeteer": "^25.7.0"
+  },
+  "allowScripts": {
+    "puppeteer@25.7.0": true
+  }
+}

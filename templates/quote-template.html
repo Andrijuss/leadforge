@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8" />
+<title>{{TITLE}}</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DejaVu Sans', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; color: #1f2937; font-size: 12px; line-height: 1.55; }
+  .page { width: 210mm; min-height: 297mm; padding: 16mm 18mm; position: relative; }
+  .page-break { page-break-before: always; }
+
+  /* Header */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid {{ACCENT}}; padding-bottom: 10mm; }
+  .brand h1 { font-size: 22px; color: {{ACCENT}}; letter-spacing: -0.5px; }
+  .brand .tagline { color: #6b7280; font-size: 11px; margin-top: 2px; }
+  .doc h2 { font-size: 26px; color: #111827; text-align: right; text-transform: uppercase; letter-spacing: 1px; }
+  .doc .docno { text-align: right; color: #6b7280; font-size: 11px; margin-top: 4px; }
+
+  .meta { display: flex; gap: 12mm; margin: 8mm 0; }
+  .meta .block { flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 5mm 6mm; }
+  .meta .block h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 2mm; }
+  .meta .block p { font-size: 12px; }
+
+  h3.section { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: {{ACCENT}}; border-bottom: 1px solid #e5e7eb; padding-bottom: 2mm; margin: 8mm 0 4mm; }
+
+  /* Design preview */
+  .preview { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; margin-top: 4mm; }
+  .preview .bar { height: 8px; background: {{ACCENT}}; }
+  .preview .mock { padding: 6mm; background: #ffffff; min-height: 55mm; }
+  .preview .legend { background: #f9fafb; border-top: 1px solid #e5e7eb; padding: 3mm 6mm; font-size: 10px; color: #6b7280; }
+
+  /* Services table */
+  table.services { width: 100%; border-collapse: collapse; margin-top: 3mm; }
+  table.services th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; padding: 3mm 2mm; border-bottom: 1.5px solid #e5e7eb; }
+  table.services td { padding: 3mm 2mm; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  table.services .desc { color: #6b7280; font-size: 11px; }
+  table.services .price { white-space: nowrap; text-align: right; font-weight: 600; }
+  table.services .unit { white-space: nowrap; text-align: right; color: #9ca3af; font-size: 10px; }
+
+  .totals { margin-top: 6mm; margin-left: auto; width: 70mm; }
+  .totals .row { display: flex; justify-content: space-between; padding: 1.6mm 0; }
+  .totals .row.total { border-top: 2px solid {{ACCENT}}; margin-top: 2mm; padding-top: 3mm; font-weight: 700; font-size: 14px; }
+
+  .notes { margin-top: 6mm; background: #fff7ed; border-left: 3px solid {{ACCENT}}; padding: 4mm 5mm; border-radius: 0 8px 8px 0; font-size: 11px; color: #7c2d12; }
+
+  .footer { position: absolute; bottom: 12mm; left: 18mm; right: 18mm; border-top: 1px solid #e5e7eb; padding-top: 4mm; display: flex; justify-content: space-between; color: #9ca3af; font-size: 10px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="brand">
+        <h1>{{AGENCY_NAME}}</h1>
+        <div class="tagline">{{AGENCY_TAGLINE}}</div>
+      </div>
+      <div class="doc">
+        <h2>{{DOC_TITLE}}</h2>
+        <div class="docno">N. {{DOC_NUMBER}} &middot; {{DATE}}</div>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="block">
+        <h3>Preparato per</h3>
+        <p><strong>{{CLIENT_NAME}}</strong><br/>{{CLIENT_URL}}</p>
+      </div>
+      <div class="block">
+        <h3>Contatti</h3>
+        <p>{{AGENCY_EMAIL}}<br/>{{AGENCY_PHONE}}</p>
+      </div>
+    </div>
+
+    <h3 class="section">Proposta nuova grafica</h3>
+    {{DESIGN_STATEMENT}}
+    <div class="preview">
+      <div class="bar"></div>
+      <div class="mock">{{DESIGN_PREVIEW}}</div>
+      <div class="legend">{{DESIGN_LEGEND}}</div>
+    </div>
+
+    <h3 class="section">Servizi inclusi</h3>
+    {{SERVICES_TABLE}}
+
+    <div class="totals">
+      {{TOTALS_ROWS}}
+    </div>
+
+    <div class="notes">
+      <strong>Nota:</strong> {{NOTES}}
+    </div>
+
+    <div class="footer">
+      <span>{{AGENCY_NAME}} &middot; {{AGENCY_WEBSITE}}</span>
+      <span>Validità offerta: {{VALIDITY}}</span>
+    </div>
+  </div>
+</body>
+</html>

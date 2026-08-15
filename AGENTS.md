@@ -142,6 +142,34 @@ Fa commit e push su `git@github.com:Andrijuss/leadforge.git`. I segreti
 - Gli artefatti finali devono essere **pronti all'invio**: HTML email completo
   (no placeholder residui), PDF ben reso, contatti corretti.
 
+## Prima di chiudere ogni sessione
+
+Ogni volta che stai per chiudere la sessione, fai SEMPRE questi passi:
+
+1. **Aggiorna il `HANDOFF.md` del cliente** attivo (in `data/clients/<id>/`) con
+   stato corrente, decisioni e i prossimi 2-3 passi concreti, così un agente
+   "freddo" può riprendere senza chat.
+2. **Aggiorna `client.json`** (status + nota) se lo stato è cambiato.
+3. **Commit e push** su git come da "Backup su GitHub" sopra (`.env`,
+   `screenshot.png`, `*.pdf` sono ignorati: non committarli).
+4. **Non toccare il repo `nexu-io/open-design`**: il file
+   `deploy/docker-compose.linux.yml` è una personalizzazione locale e NON va
+   committato/pushato altrove.
+
+### Generazione PDF su questo server
+
+Il server non ha le lib di sistema per Chromium. Per generare un PDF servono:
+
+```bash
+export LD_LIBRARY_PATH=/tmp/opencode/pdf-libs/rootfs/usr/lib/x86_64-linux-gnu
+node scripts/html2pdf.mjs data/clients/<id>/quote.html data/clients/<id>/quote.pdf
+```
+
+Se `/tmp/opencode/pdf-libs` non esiste più (es. dopo riavvio), ricostruiscilo
+scaricando con `apt-get download` le lib necessarie a Chromium (glib, atk,
+pango, cairo, nss, avahi, …), estraendole con `dpkg-deb -x` in una cartella e
+usandola come `LD_LIBRARY_PATH`.
+
 ## Checklist di qualità prima della review
 
 - [ ] `analysis.md` cita almeno 3 debolezze specifiche (con screenshot come prova)

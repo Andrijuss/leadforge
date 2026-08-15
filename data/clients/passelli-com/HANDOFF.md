@@ -21,8 +21,11 @@
 - Cartella cliente: `data/clients/passelli-com/`
 - `client.json` — id, lingua, contatto, status.
 - `analysis.md` — analisi completa (design, struttura, SEO, opportunità AI).
-- `email.html` — email di outreach (da riscrivere).
-- `quote.html` — preventivo (da riscrivere); `quote.pdf` = PDF generato da esso.
+- `email.html` — email di outreach (GIÀ riscritta: design pulito + copy più
+  umana + nuovo oggetto).
+- `quote.html` — preventivo (GIÀ riscritto: nuovi prezzi + design rifinito);
+  `quote.pdf` = PDF generato da esso.
+- `HANDOFF.md` — questo file (stato, decisioni, prossimi passi).
 - Template di partenza: `templates/email-template.html`,
   `templates/quote-template.html` (placeholder `{{...}}`).
 - Contesto progetto: `../AGENTS.md` (Leadforge flow), `config/agency.json`
@@ -81,28 +84,50 @@ Raccomandazione già data (metti in preventivo un canone **piatto**):
 
 ## Cosa fare adesso (prossimi passi)
 
-0. ✅ **PREZZI e RISCRITTURA** — `email.html` riscritta (design pulito, copy più
-   umana, oggetto "Passelli su Google: le foto che vendono non si trovano"),
-   `quote.html`/`quote.pdf` aggiornati con i nuovi prezzi e design rifinito
-   (AI €50/mese, restyling "da €200", SEO €150, totali da €427). Nota: per
-   rigenerare il PDF su questo server serve
-   `LD_LIBRARY_PATH=/tmp/opencode/pdf-libs/rootfs/usr/lib/x86_64-linux-gnu`
-   (lib di sistema per Chromium, assenti di default).
+1. ✅ **FATTO — PREZZI e RISCRITTURA** — `email.html` riscritta (design pulito,
+   copy più umana, oggetto "Passelli su Google: le foto che vendono non si
+   trovano"), `quote.html`/`quote.pdf` aggiornati con i nuovi prezzi e design
+   rifinito (AI €50/mese, restyling "da €200", SEO €150, totali da €427).
 
-1. **REVIEW UMANA OBBLIGATORIA** — mostra all'utente `analysis.md`,
-   `email.html` e `quote.pdf`, raccogli feedback e applica le correzioni.
-   Loop finché approva.
-   venditore, in italiano, con la proposta AI + restyling + SEO. Oggetto
-   specifico su 1-2 debolezze concrete. CTA chiara. ~120-180 parole di corpo.
-   Aggiornare `client.subject` in client.json con l'oggetto scelto.
-2. **Riscrivere `quote.html`** — design migliore, nuovi prezzi (entry price
-   basso per il restyling, €50/mese AI, €150 SEO), mockup della nuova grafica
-   "Artigiano premium" (antracite + rame/bronzo). Poi rigenerare
-   `quote.pdf` con `node scripts/html2pdf.mjs data/clients/passelli-com/quote.html data/clients/passelli-com/quote.pdf`.
-3. **Mostrare all'utente** `analysis.md`, `email.html`, `quote.pdf` (review
-   obbligatoria, loop finché approva).
-4. All'approvazione: `client.json.status = "reviewed"` + nota esito; poi backup
+2. **REVIEW UMANA OBBLIGATORIA (prossimo passo reale)** — mostra all'utente
+   `analysis.md`, `email.html` e `quote.pdf`, raccogli feedback e applica le
+   correzioni. Loop finché approva.
+
+3. All'approvazione: `client.json.status = "reviewed"` + nota esito; poi backup
    con `bash scripts/backup.sh`.
+
+### Come rigenerare il PDF (importante su questo server)
+
+Il server non ha le lib di sistema per Chromium; senza di esse `html2pdf` fallisce
+(`libglib-2.0.so.0 … cannot open`). Per generare il PDF servono:
+
+```bash
+export LD_LIBRARY_PATH=/tmp/opencode/pdf-libs/rootfs/usr/lib/x86_64-linux-gnu
+node scripts/html2pdf.mjs data/clients/passelli-com/quote.html data/clients/passelli-com/quote.pdf
+```
+
+Se `/tmp/opencode/pdf-libs` non esiste più (riavvio), ricostruisci il set di lib
+con `apt-get download` dei pacchetti necessari a Chromium (glib, atk, pango,
+cairo, nss, avahi, ecc.) estratti in una cartella e usati come `LD_LIBRARY_PATH`.
+
+## Cosa fare PRIMA che ogni sessione si chiuda
+
+Ogni volta che stai per chiudere la sessione, fai SEMPRE questo, in ordine:
+
+1. **Aggiorna questo `HANDOFF.md`** con lo stato più recente: cosa è stato
+   fatto, cosa resta, prezzi decisi, e i prossimi 2-3 passi concreti. Il testo
+   deve bastare a un agente "freddo" per riprendere senza chat.
+2. **Aggiorna `client.json`** (status + nota) se lo stato è cambiato.
+3. **Salva su git** i cambiamenti:
+   ```bash
+   cd /opt/leadforge
+   git add -A
+   git commit -m "leadforge: <cosa è stato fatto>"
+   git push origin main
+   ```
+   (`.env`, `screenshot.png` e `*.pdf` sono già in `.gitignore` — non vanno committati.)
+4. **Non toccare** il repo `nexu-io/open-design` (file `deploy/docker-compose.linux.yml`
+   resta una personalizzazione locale: NON fargli commit/push).
 
 ## Note operative
 
@@ -111,3 +136,23 @@ Raccomandazione già data (metti in preventivo un canone **piatto**):
   specifici ("prima pagina in 2 settimane" vietato).
 - L'artefatto finale deve essere pronto all'invio: niente placeholder residui.
 - Non usare i vecchi prezzi di `config/agency.json` finché non aggiornati.
+
+## Troubleshooting Open Design su questo server
+
+Errori visti e come risolverli (documentato il 2026-08-15):
+
+1. **"Unexpected error database is locked"** (opencode/Open Design) — causato da
+   un processo `opencode` vecchio e sospeso (stato `Tl`) rimasto vivo con in mano
+   il lock SQLite di `~/.local/share/opencode/opencode.db`. Fix: trovare e killare
+   il processo stale (`pgrep -af opencode` → `kill -9 <pid>`), lasciando vivo solo
+   la sessione corrente.
+2. **"agent exited with signal SIGKILL"** (Open Design) — il container
+   `open-design` aveva `mem_limit=384m` ed era stato OOM-killato durante un run
+   agente (`docker inspect open-design` → `OOMKilled(prev)=true`). Fix: alzare
+   `OPEN_DESIGN_MEM_LIMIT` in `deploy/.env` a `1536m` e ricreare il container:
+   ```bash
+   cd /opt/open-design/deploy
+   docker compose -f docker-compose.yml -f docker-compose.linux.yml up -d --no-build
+   ```
+   Nota: le lib Chromium per generare i PDF stanno in `/tmp/opencode/pdf-libs`
+   (ricostruibili con `apt-get download` + `dpkg-deb -x` se il server riavvia).

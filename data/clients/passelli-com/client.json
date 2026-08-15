@@ -1,0 +1,17 @@
+{
+  "id": "passelli-com",
+  "name": "passelli.com",
+  "url": "https://www.passelli.com",
+  "lang": "it",
+  "sector": "",
+  "contact": {
+    "name": "Passelli Srl",
+    "email": "passelli@passelli.it"
+  },
+  "created": "2026-08-14T18:17:39.716Z",
+  "status": "quote-ready",
+  "notes": [
+    "2026-08-15: email e preventivo riscritti con nuovo modello di prezzo (restyling da €200 per difficoltà, AI €50/mese, SEO €150). In attesa di review umana."
+  ],
+  "subject": "Passelli su Google: le foto che vendono non si trovano"
+}

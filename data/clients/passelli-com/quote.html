@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Preventivo — Passelli Srl</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'LFSans', 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11.5px; line-height: 1.6; }
+  .em { font-family: 'LFSerif', 'DejaVu Serif', serif; }
+  .page { width: 210mm; min-height: 297mm; padding: 14mm 16mm; position: relative; }
+  .page-break { page-break-before: always; }
+  strong { font-weight: 700; }
+
+  /* Header */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #a9743f; padding-bottom: 8mm; }
+  .brand h1 { font-size: 22px; color: #a9743f; letter-spacing: -0.5px; }
+  .brand .tagline { color: #6b7280; font-size: 11px; margin-top: 2px; }
+  .doc h2 { font-size: 26px; color: #111827; text-align: right; text-transform: uppercase; letter-spacing: 1px; }
+  .doc .docno { text-align: right; color: #6b7280; font-size: 11px; margin-top: 4px; }
+
+  .meta { display: flex; gap: 10mm; margin: 7mm 0; }
+  .meta .block { flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 9px; padding: 5mm 6mm; }
+  .meta .block h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 2mm; }
+  .meta .block p { font-size: 11.5px; }
+  .meta .block .url { color: #a9743f; font-size: 11px; }
+
+  h3.section { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #a9743f; border-bottom: 1px solid #e5e7eb; padding-bottom: 2mm; margin: 8mm 0 4mm; }
+  p.lead { font-size: 11.5px; color: #374151; }
+
+  /* Value-prop strip */
+  .costi { display: flex; gap: 5mm; margin-top: 4mm; }
+  .costi .card { flex: 1; border: 1px solid #e5e7eb; border-radius: 9px; padding: 5mm; background: #fff; }
+  .costi .card .n { font-size: 19px; font-weight: 700; color: #111827; }
+  .costi .card .k { font-size: 10px; color: #6b7280; margin-top: 1.5mm; line-height: 1.4; }
+  .costi .card.neg .n { color: #b91c1c; }
+  .costi .card.pos { background: #fbf6ef; border-color: #e7cdac; }
+  .costi .card.pos .n { color: #a9743f; }
+
+  /* Design preview mockup (nuova grafica) */
+  .preview { border: 1px solid #e5e7eb; border-radius: 11px; overflow: hidden; margin-top: 4mm; }
+  .preview .bar { height: 8px; background: linear-gradient(90deg,#111827,#a9743f); }
+  .preview .mock { padding: 6mm; background: #ffffff; }
+  .mock-nav { display: flex; justify-content: space-between; align-items: center; padding: 2mm 1mm 4mm; border-bottom: 1px solid #f3f4f6; }
+  .mock-nav strong { color: #111827; letter-spacing: 2px; font-size: 11px; }
+  .mock-nav span { color: #9ca3af; font-size: 9px; letter-spacing: 1px; }
+  .mock-nav b { background: #a9743f; color: #fff; font-size: 9px; padding: 1.5mm 3mm; border-radius: 3mm; }
+  .mock-hero { background: #111827; border-radius: 8px; margin-top: 4mm; padding: 8mm 7mm; color: #fff; position: relative; overflow: hidden; }
+  .mock-hero .kicker { color: #c8a878; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; }
+  .mock-hero h4 { font-size: 16px; font-weight: 700; line-height: 1.3; margin: 2mm 0 1.5mm; }
+  .mock-hero p { color: #9ca3af; font-size: 9px; max-width: 70%; }
+  .mock-hero .cta { display: inline-block; margin-top: 3mm; background: #a9743f; color: #fff; font-size: 9px; padding: 2mm 4mm; border-radius: 3mm; }
+  .mock-hero .window { position: absolute; right: 6mm; top: 8mm; width: 38mm; height: 26mm; border: 3px solid #c8a878; border-radius: 2mm; background: linear-gradient(135deg,#1e3a5f,#3b6ea5); }
+  .mock-hero .window::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.35); margin: 2mm; }
+  .mock-prods { display: flex; gap: 3mm; margin-top: 4mm; }
+  .mock-card { flex: 1; border: 1px solid #e5e7eb; border-radius: 7px; padding: 3mm; }
+  .mock-card .pic { height: 11mm; border-radius: 4px; background: linear-gradient(135deg,#d7dbe0,#a8b0ba); margin-bottom: 2mm; }
+  .mock-card.alt .pic { background: linear-gradient(135deg,#c8a878,#93714a); }
+  .mock-card h5 { font-size: 9px; color: #111827; }
+  .mock-card span { font-size: 8px; color: #9ca3af; }
+  .preview .legend { background: #f9fafb; border-top: 1px solid #e5e7eb; padding: 3mm 6mm; font-size: 10px; color: #6b7280; }
+
+  /* Servizi */
+  table.services { width: 100%; border-collapse: collapse; margin-top: 3mm; }
+  table.services th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; padding: 3mm 2mm; border-bottom: 1.5px solid #e5e7eb; }
+  table.services td { padding: 3mm 2mm; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  table.services .name { font-weight: 700; font-size: 11.5px; }
+  table.services .desc { color: #6b7280; font-size: 10.5px; }
+  table.services .price { white-space: nowrap; text-align: right; font-weight: 700; color: #a9743f; }
+  table.services .unit { white-space: nowrap; text-align: right; color: #9ca3af; font-size: 10px; }
+
+  .totals { margin-top: 6mm; margin-left: auto; width: 82mm; }
+  .totals .row { display: flex; justify-content: space-between; padding: 1.6mm 0; }
+  .totals .row.sub { color: #6b7280; }
+  .totals .row.total { border-top: 2px solid #a9743f; margin-top: 2mm; padding-top: 3mm; font-weight: 700; font-size: 14px; color: #111827; }
+  .totals .row.monthly { font-size: 11px; color: #111827; font-weight: 600; }
+
+  .notes { margin-top: 6mm; background: #fbf6ef; border-left: 3px solid #a9743f; padding: 4mm 5mm; border-radius: 0 9px 9px 0; font-size: 10.5px; color: #5b4637; }
+  .notes li { margin: 1.5mm 0 1.5mm 4mm; }
+
+  .footer { position: absolute; bottom: 11mm; left: 16mm; right: 16mm; border-top: 1px solid #e5e7eb; padding-top: 4mm; display: flex; justify-content: space-between; color: #9ca3af; font-size: 10px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="brand">
+        <h1>Andrijus</h1>
+        <div class="tagline">Web design, sviluppo &amp; automazione aziendale con AI</div>
+      </div>
+      <div class="doc">
+        <h2>Preventivo</h2>
+        <div class="docno">N. LF-2026-001 &middot; 15 agosto 2026</div>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="block">
+        <h3>Preparato per</h3>
+        <p><strong>Passelli Srl</strong><br/>Sgonico (Trieste)</p>
+        <p class="url">passelli.com</p>
+      </div>
+      <div class="block">
+        <h3>Contatti</h3>
+        <p>andrijusciric@gmail.com<br/>—</p>
+      </div>
+    </div>
+
+    <h3 class="section">La proposta in una frase</h3>
+    <p class="lead em" style="font-size:12.5px;color:#111827;">Un sito più moderno che trasforma le visite in richieste, e un assistente AI che risponde 24/7 al posto vostro — con un investimento di partenza contenuto che cresce solo con la complessità del progetto.</p>
+
+    <h3 class="section">Cosa cambia per voi</h3>
+    <div class="costi">
+      <div class="card neg">
+        <div class="n">h24/7</div>
+        <div class="k">di domande su tempi, garanzie e detrazioni che oggi restano senza risposta fuori orario.</div>
+      </div>
+      <div class="card neg">
+        <div class="n">2-3 gg</div>
+        <div class="k">di attesa tipica per un preventivo, mentre il cliente medio confronta 3 concorrenti.</div>
+      </div>
+      <div class="card pos">
+        <div class="n">AI</div>
+        <div class="k">un assistente che qualifica, risponde, raccoglie le misure e passa il caso al team solo quando serve.</div>
+      </div>
+    </div>
+
+    <h3 class="section">Nuova direzione grafica</h3>
+    <p class="lead em" style="font-size:12px;">«Artigiano premium»: fondo antracite profondo, accento rame/bronzo in eco dei profili in legno, tipografia editoriale. La direzione che oggi distingue i serramentisti di fascia alta in Europa.</p>
+    <div class="preview">
+      <div class="bar"></div>
+      <div class="mock">
+        <div class="mock-nav"><strong>PASSELLI</strong><span>PRODOTTI&nbsp;&nbsp;PROGETTI&nbsp;&nbsp;CONTATTI</span><b>Preventivo gratuito</b></div>
+        <div class="mock-hero">
+          <div class="kicker">Infissi · Serramenti · Trieste</div>
+          <h4>Il confine tra casa e paesaggio, senza compromessi.</h4>
+          <p>Alluminio e legno/alluminio su misura. Posa a regola d'arte, garanzie e detrazioni gestite per te.</p>
+          <span class="cta">Richiedi un sopralluogo</span>
+          <div class="window"></div>
+        </div>
+        <div class="mock-prods">
+          <div class="mock-card"><div class="pic"></div><h5>Serramenti in alluminio</h5><span>Minimal, sottili, sicuri</span></div>
+          <div class="mock-card alt"><div class="pic"></div><h5>Legno/alluminio</h5><span>Calore dentro, resistenza fuori</span></div>
+          <div class="mock-card"><div class="pic"></div><h5>Sistemi oscuranti</h5><span>Scorrevoli e tapparelle</span></div>
+        </div>
+      </div>
+      <div class="legend">Anteprima della nuova homepage: hero con CTA «sopralluogo», prodotti per categoria, percorso di conversione immediato verso l'assistente AI. Le foto definitive saranno tratte dai vostri progetti reali.</div>
+    </div>
+
+    <h3 class="section">Servizi inclusi</h3>
+    <table class="services">
+      <thead><tr><th>Servizio</th><th style="text-align:left;">Cosa fa per voi</th><th>Importo</th><th>Cadenza</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="name">Assistente AI processi interni</td>
+          <td class="desc">Risponde a domande frequenti, qualifica i lead, raccoglie misure, fissa e ricorda sopralluoghi e posa via email/WhatsApp; traccia ogni caso fino alla chiusura</td>
+          <td class="price">€ 50,00</td>
+          <td class="unit">al mese</td>
+        </tr>
+        <tr>
+          <td class="name">Restyling sito web</td>
+          <td class="desc">Nuova grafica «Artigiano premium», mobile-first, galleria progetti, modulo richiesta preventivo collegato all'assistente AI, migrazione a GA4</td>
+          <td class="price">da € 200,00</td>
+          <td class="unit">una tantum</td>
+        </tr>
+        <tr>
+          <td class="name">Ottimizzazione SEO</td>
+          <td class="desc">Schema LocalBusiness, testo alternativo immagini, tag localizzati «infissi Trieste», parole long-tail del settore e approfondimento SEO locale</td>
+          <td class="price">€ 150,00</td>
+          <td class="unit">una tantum</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <div class="row sub"><span>Restyling (da €200) + SEO</span><span>da € 350,00</span></div>
+      <div class="row sub"><span>IVA (22%)</span><span>da € 77,00</span></div>
+      <div class="row total"><span>Totale progetto</span><span>da € 427,00</span></div>
+      <div class="row monthly"><span>Assistente AI processi interni</span><span>€ 50,00/mese</span></div>
+    </div>
+
+    <div class="notes">
+      <strong>Incluso e condizioni:</strong>
+      <ul>
+        <li>Il canone mensile dell'assistente copre un numero ragionevole di richieste; volumi eccezionali vengono rivalutati.</li>
+        <li>Pagamento 50% a inizio progetto, 50% al rilascio. Il primo mese dell'assistente AI è incluso.</li>
+        <li>Contenuti e foto di progetto forniti da Passelli o prodotti in collaborazione. Tempi indicativi: 3-4 settimane per v1.</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <span>Andrijus &middot; https://andrijus.example.com</span>
+      <span>Validità offerta: 30 giorni</span>
+    </div>
+  </div>
+</body>
+</html>

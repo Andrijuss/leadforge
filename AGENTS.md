@@ -12,6 +12,20 @@ il motore dell'analisi, della copywriting e del design. Il progetto ti fornisce
 solo la meccanica: fetch del sito, screenshot, rendering PDF, invio email,
 backup git.
 
+## File `md` per cliente (leggili prima di modificare)
+
+Ogni cliente ha una propria cartella in `data/clients/<id>/` con file `.md`
+che raccontano la storia del lavoro e le decisioni prese, incluso un
+`HANDOFF.md` di ripristino (usato per riprendere se la chat si chiude, con
+stato attuale, prezzo deciso e prossimi passi).
+
+- Prima di modificare email/preventivo di un cliente, **leggi sempre il
+  `HANDOFF.md` e l'`analysis.md`** della sua cartella: lì stanno lingua, prezzi
+  decisi, debolezze e il "punto di partenza".
+- Se una sessione futura deve riprendere quel cliente, parti da essi.
+- Quando una decisione di prezzo/offerta cambia, aggiorna il `HANDOFF.md` di
+  quel cliente.
+
 ## Flusso di lavoro (seguilo in ordine)
 
 ### Step 1 — Ingresso cliente
@@ -132,6 +146,6 @@ Fa commit e push su `git@github.com:Andrijuss/leadforge.git`. I segreti
 
 - [ ] `analysis.md` cita almeno 3 debolezze specifiche (con screenshot come prova)
 - [ ] `email.html`: lingua cliente, oggetto specifico, corpo <180 parole, CTA
-- [ ] `quote.html`: mockup della nuova grafica coerente con il settore, prezzi da agency.json
+- [ ] `quote.html`: mockup della nuova grafica coerente con il settore, prezzi coerenti con `config/agency.json` **e** con il `HANDOFF.md` del cliente (quest'ultimo vince se diverge)
 - [ ] `quote.pdf` generato e visivamente pulito (niente overflow/taglio)
 - [ ] `client.json` aggiornato (status, subject, contact)

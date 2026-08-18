@@ -11,7 +11,9 @@
   "created": "2026-08-14T18:17:39.716Z",
   "status": "quote-ready",
   "notes": [
-    "2026-08-15: email e preventivo riscritti con nuovo modello di prezzo (restyling da €200 per difficoltà, AI €50/mese, SEO €150). In attesa di review umana."
+    "2026-08-15: email e preventivo riscritti con nuovo modello di prezzo (restyling da €200 per difficoltà, AI €50/mese, SEO €150). In attesa di review umana.",
+    "2026-08-18: preventivo restyled con nuovo template templates/quote-template-modern.html — 2 pagine, direzione grafica dettagliata, anteprima con scene SVG; canone mensile ora 'Assistente AI + hosting & gestione — da €50/mese'. PDF da rigenerare (lib Chromium mancanti sul server).",
+    "2026-08-18: aggiunto scripts/gen-image.mjs (Cloudflare Workers AI, free tier flux-1-schnell) e generato set di 6 foto eleganti in data/clients/passelli-com/images/ per gli asset fotografici del nuovo design. Status invariato (quote-ready)."
   ],
   "subject": "Passelli su Google: le foto che vendono non si trovano"
 }

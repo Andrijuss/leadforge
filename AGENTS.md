@@ -170,6 +170,35 @@ scaricando con `apt-get download` le lib necessarie a Chromium (glib, atk,
 pango, cairo, nss, avahi, …), estraendole con `dpkg-deb -x` in una cartella e
 usandola come `LD_LIBRARY_PATH`.
 
+### Generazione immagini reali (Cloudflare Workers AI)
+
+Per immagini **fotografiche** dentro il mockup del preventivo (hero, foto
+prodotti/servizi, texture) usa Cloudflare Workers AI. La "screenshot" della
+nuova homepage deve invece restare il **mockup HTML** renderizzato (testo UI
+leggibile): i modelli text-to-image scrivono male navbar/titoli/bottoni.
+
+```bash
+node scripts/gen-image.mjs "<descrizione dettagliata e realistica>" \
+  --client <nome> --aspect 16:9
+```
+
+L'immagine viene salvata in `data/clients/<nome>/images/` (una cartella
+`images` per cliente, visualizzabile da browser). Per un percorso custom basta
+passare l'output come secondo argomento posizionale.
+
+- Chiavi in `.env`: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`
+  (permesso "Workers AI: Run"), `CLOUDFLARE_IMAGE_MODEL`.
+- Modelli: default gratis `@cf/black-forest-labs/flux-1-schnell` (free tier,
+  ~230 img/giorno); `@cf/leonardo/lucid-origin` (testo accurato, product
+  mockup); `@cf/black-forest-labs/flux-2-dev` (più qualità/fotorealismo).
+- L'immagine prodotta va incrociata nel `quote.html` come
+  `file://`/realtive path o incorporata in data-URI prima del
+  `html2pdf` (il PDF non deve dipendere da URL remoti).
+- Collegamento con open-design: Open Design non ha un provider Cloudflare
+  nativo; usare invece gli script di leadforge per la generazione, oppure il
+  pattern "external media orchestration" con un tool MCP (vedi
+  `docs/external-media-orchestration.md` nel repo open-design).
+
 ## Checklist di qualità prima della review
 
 - [ ] `analysis.md` cita almeno 3 debolezze specifiche (con screenshot come prova)

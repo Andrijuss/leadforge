@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "data/clients/passelli-com/preview.html",
+  "entry": "data/clients/passelli-com/preview.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-08-18T08:07:34.529Z",
+  "updatedAt": "2026-08-18T08:07:34.529Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

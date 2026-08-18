@@ -6,192 +6,416 @@
 <style>
   @page { size: A4; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'LFSans', 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11.5px; line-height: 1.6; }
-  .em { font-family: 'LFSerif', 'DejaVu Serif', serif; }
-  .page { width: 210mm; min-height: 297mm; padding: 14mm 16mm; position: relative; }
-  .page-break { page-break-before: always; }
+  body {
+    font-family: 'LFSans', -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #201d19;
+    font-size: 11.5px;
+    line-height: 1.55;
+    background: #faf7f2;
+  }
   strong { font-weight: 700; }
+  .em { font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; }
 
-  /* Header */
-  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #a9743f; padding-bottom: 8mm; }
-  .brand h1 { font-size: 22px; color: #a9743f; letter-spacing: -0.5px; }
-  .brand .tagline { color: #6b7280; font-size: 11px; margin-top: 2px; }
-  .doc h2 { font-size: 26px; color: #111827; text-align: right; text-transform: uppercase; letter-spacing: 1px; }
-  .doc .docno { text-align: right; color: #6b7280; font-size: 11px; margin-top: 4px; }
+  :root {
+    --accent: #a8763b;
+    --accent-deep: #8a5f2e;
+    --accent-bg: #d4a166;
+    --ink: #201d19;
+    --muted: #6f675d;
+    --paper: #faf7f2;
+    --surface: #ffffff;
+    --line: #e6dfd4;
+    --line-soft: #f0eae1;
+  }
 
-  .meta { display: flex; gap: 10mm; margin: 7mm 0; }
-  .meta .block { flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 9px; padding: 5mm 6mm; }
-  .meta .block h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 2mm; }
-  .meta .block p { font-size: 11.5px; }
-  .meta .block .url { color: #a9743f; font-size: 11px; }
+  .page { width: 210mm; min-height: 297mm; padding: 14mm 15mm 22mm; position: relative; background: var(--paper); }
+  .page-break { page-break-before: always; }
+  .page + .page { page-break-before: always; }
 
-  h3.section { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #a9743f; border-bottom: 1px solid #e5e7eb; padding-bottom: 2mm; margin: 8mm 0 4mm; }
-  p.lead { font-size: 11.5px; color: #374151; }
+  /* ── Header ─────────────────────────────────────────────── */
+  .head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 6mm; margin-bottom: 7mm; border-bottom: 1px solid var(--line); position: relative; }
+  .brand .wordmark { font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 23px; font-weight: 700; letter-spacing: -0.3px; color: var(--ink); }
+  .brand .wordmark b { color: var(--accent); font-weight: 700; }
+  .brand .tagline { margin-top: 2.5mm; font-size: 10px; color: var(--muted); }
+  .doc { text-align: right; }
+  .doc .kind { font-size: 9px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--accent); }
+  .doc .ref { margin-top: 1.6mm; font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 13px; color: var(--ink); }
+  .doc .date { margin-top: 1.2mm; font-size: 10px; color: var(--muted); }
+  .head .rule { position: absolute; left: 0; bottom: -1px; height: 2.5px; width: 34mm; background: var(--accent); }
 
-  /* Value-prop strip */
-  .costi { display: flex; gap: 5mm; margin-top: 4mm; }
-  .costi .card { flex: 1; border: 1px solid #e5e7eb; border-radius: 9px; padding: 5mm; background: #fff; }
-  .costi .card .n { font-size: 19px; font-weight: 700; color: #111827; }
-  .costi .card .k { font-size: 10px; color: #6b7280; margin-top: 1.5mm; line-height: 1.4; }
-  .costi .card.neg .n { color: #b91c1c; }
-  .costi .card.pos { background: #fbf6ef; border-color: #e7cdac; }
-  .costi .card.pos .n { color: #a9743f; }
+  /* ── Apertura ───────────────────────────────────────────── */
+  .intro .eyebrow, .sec .eyebrow, .notes .ntitle { font-size: 8.5px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--accent); }
+  .intro .greeting { margin-top: 3mm; font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 19px; line-height: 1.3; color: var(--ink); }
+  .intro .statement { margin-top: 2.5mm; font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 13.5px; line-height: 1.5; color: var(--ink); }
+  .intro .note { margin-top: 2.5mm; max-width: 150mm; font-size: 10.5px; color: var(--muted); }
 
-  /* Design preview mockup (nuova grafica) */
-  .preview { border: 1px solid #e5e7eb; border-radius: 11px; overflow: hidden; margin-top: 4mm; }
-  .preview .bar { height: 8px; background: linear-gradient(90deg,#111827,#a9743f); }
-  .preview .mock { padding: 6mm; background: #ffffff; }
-  .mock-nav { display: flex; justify-content: space-between; align-items: center; padding: 2mm 1mm 4mm; border-bottom: 1px solid #f3f4f6; }
-  .mock-nav strong { color: #111827; letter-spacing: 2px; font-size: 11px; }
-  .mock-nav span { color: #9ca3af; font-size: 9px; letter-spacing: 1px; }
-  .mock-nav b { background: #a9743f; color: #fff; font-size: 9px; padding: 1.5mm 3mm; border-radius: 3mm; }
-  .mock-hero { background: #111827; border-radius: 8px; margin-top: 4mm; padding: 8mm 7mm; color: #fff; position: relative; overflow: hidden; }
-  .mock-hero .kicker { color: #c8a878; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; }
-  .mock-hero h4 { font-size: 16px; font-weight: 700; line-height: 1.3; margin: 2mm 0 1.5mm; }
-  .mock-hero p { color: #9ca3af; font-size: 9px; max-width: 70%; }
-  .mock-hero .cta { display: inline-block; margin-top: 3mm; background: #a9743f; color: #fff; font-size: 9px; padding: 2mm 4mm; border-radius: 3mm; }
-  .mock-hero .window { position: absolute; right: 6mm; top: 8mm; width: 38mm; height: 26mm; border: 3px solid #c8a878; border-radius: 2mm; background: linear-gradient(135deg,#1e3a5f,#3b6ea5); }
-  .mock-hero .window::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.35); margin: 2mm; }
-  .mock-prods { display: flex; gap: 3mm; margin-top: 4mm; }
-  .mock-card { flex: 1; border: 1px solid #e5e7eb; border-radius: 7px; padding: 3mm; }
-  .mock-card .pic { height: 11mm; border-radius: 4px; background: linear-gradient(135deg,#d7dbe0,#a8b0ba); margin-bottom: 2mm; }
-  .mock-card.alt .pic { background: linear-gradient(135deg,#c8a878,#93714a); }
-  .mock-card h5 { font-size: 9px; color: #111827; }
-  .mock-card span { font-size: 8px; color: #9ca3af; }
-  .preview .legend { background: #f9fafb; border-top: 1px solid #e5e7eb; padding: 3mm 6mm; font-size: 10px; color: #6b7280; }
+  /* ── Blocchi informativi ────────────────────────────────── */
+  .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 6.5mm 0; }
+  .cell { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 4mm 4.5mm; }
+  .cell .k { font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); }
+  .cell .v { margin-top: 1.8mm; font-size: 11px; line-height: 1.5; }
+  .cell .v small { display: block; color: var(--muted); font-size: 9.5px; margin-top: .8mm; }
+  .cell .accent { color: var(--accent-deep); }
+
+  /* ── Cosa cambia ────────────────────────────────────────── */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-top: 2.5mm; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 4mm 4.5mm; }
+  .card .n { font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 17px; font-weight: 700; line-height: 1.15; color: var(--ink); }
+  .card .k { margin-top: 1.8mm; font-size: 9px; line-height: 1.5; color: var(--muted); }
+  .card.pos { border-color: var(--accent-bg); }
+  .card.pos .n { color: var(--accent-deep); }
+
+  /* ── Direzione grafica ──────────────────────────────────── */
+  .sec { margin-top: 7mm; }
+  .sec .title { margin-top: 2mm; font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 14px; line-height: 1.4; color: var(--ink); }
+  .sec .lead { margin-top: 1.8mm; font-size: 10px; color: #4a463e; max-width: 150mm; }
+  .dirs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5mm; margin-top: 3mm; }
+  .dir { background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 2.6mm 3.5mm; }
+  .dir .k { font-size: 7.5px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); }
+  .dir .v { margin-top: 1mm; font-size: 8px; line-height: 1.5; color: #4a463e; }
+
+  /* Anteprima mockup */
+  .preview { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 3.5mm; }
+  .preview .bar { height: 5px; background: linear-gradient(90deg, var(--ink), var(--accent)); }
+  .preview .mock { padding: 4mm; }
+
+  .mock-nav { display: flex; justify-content: space-between; align-items: center; padding: 1mm 0 2.5mm; border-bottom: 1px solid #efe9e0; }
+  .mock-nav .mk { font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 11px; letter-spacing: 2.5px; font-weight: 700; color: var(--ink); }
+  .mock-nav .lv { color: #9a9188; font-size: 7.5px; letter-spacing: 1.5px; }
+  .mock-nav .ghost { color: var(--accent-deep); border: 1px solid var(--accent-bg); font-size: 7.5px; letter-spacing: .5px; padding: 1.4mm 3mm; border-radius: 4mm; }
+
+  .mock-hero { display: flex; gap: 4mm; background: linear-gradient(135deg, #17140f, #25201a); border-radius: 9px; margin-top: 2.5mm; padding: 4.5mm; color: #fff; position: relative; overflow: hidden; }
+  .mock-hero .txt { flex: 1.18; padding: 1.5mm 0 0 1mm; }
+  .mock-hero .kicker { color: #d8ab7a; font-size: 7px; letter-spacing: 3px; text-transform: uppercase; }
+  .mock-hero h4 { font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 12.5px; font-weight: 700; line-height: 1.3; margin: 1.8mm 0 1.3mm; max-width: 100%; }
+  .mock-hero p { color: #b3aba0; font-size: 7.5px; line-height: 1.55; max-width: 100%; }
+  .mock-hero .btns { margin-top: 2mm; display: flex; align-items: center; gap: 2.5mm; }
+  .mock-hero .primary { background: var(--accent); color: #fff; font-size: 7px; letter-spacing: .4px; padding: 1.6mm 3.2mm; border-radius: 4mm; }
+  .mock-hero .link { color: #cfc6b8; font-size: 7px; text-decoration: underline; text-underline-offset: 1.5px; }
+  .mock-hero .proof { margin-top: 2.5mm; color: #a79f92; font-size: 6.3px; letter-spacing: .8px; }
+  .mock-hero .proof b { color: #d8ab7a; font-weight: 700; }
+  .mock-hero .scene { flex: 1; max-width: 68mm; min-width: 0; align-self: stretch; }
+  .mock-hero .scene svg { width: 100%; height: 100%; display: block; border-radius: 6px; }
+
+  .mock-prods { display: flex; gap: 2.5mm; margin-top: 2.5mm; }
+  .mock-card { flex: 1; border: 1px solid #eae3d8; border-radius: 7px; padding: 2.5mm; }
+  .mock-card .pic { border-radius: 4px; overflow: hidden; margin-bottom: 1.6mm; }
+  .mock-card .pic svg { display: block; width: 100%; height: 13mm; }
+  .mock-card h5 { font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 9px; color: var(--ink); }
+  .mock-card span { font-size: 7px; color: #9a9188; }
+
+  .preview .legend { background: var(--paper); border-top: 1px solid var(--line); padding: 2.8mm 4.5mm; font-size: 9px; color: var(--muted); }
 
   /* Servizi */
   table.services { width: 100%; border-collapse: collapse; margin-top: 3mm; }
-  table.services th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; padding: 3mm 2mm; border-bottom: 1.5px solid #e5e7eb; }
-  table.services td { padding: 3mm 2mm; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
-  table.services .name { font-weight: 700; font-size: 11.5px; }
-  table.services .desc { color: #6b7280; font-size: 10.5px; }
-  table.services .price { white-space: nowrap; text-align: right; font-weight: 700; color: #a9743f; }
-  table.services .unit { white-space: nowrap; text-align: right; color: #9ca3af; font-size: 10px; }
+  table.services th { text-align: left; font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); padding: 2.5mm 2mm; border-bottom: 1px solid var(--accent); }
+  table.services td { padding: 2.5mm 2mm; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  table.services tr:last-child td { border-bottom: none; }
+  table.services .name { font-weight: 700; font-size: 11px; width: 28%; }
+  table.services .desc { color: var(--muted); font-size: 9.5px; line-height: 1.5; }
+  table.services .price { white-space: nowrap; text-align: right; font-weight: 700; color: var(--accent-deep); font-size: 11px; }
+  table.services .unit { white-space: nowrap; text-align: right; color: var(--muted); font-size: 8.5px; }
 
-  .totals { margin-top: 6mm; margin-left: auto; width: 82mm; }
-  .totals .row { display: flex; justify-content: space-between; padding: 1.6mm 0; }
-  .totals .row.sub { color: #6b7280; }
-  .totals .row.total { border-top: 2px solid #a9743f; margin-top: 2mm; padding-top: 3mm; font-weight: 700; font-size: 14px; color: #111827; }
-  .totals .row.monthly { font-size: 11px; color: #111827; font-weight: 600; }
+  .totals { margin-top: 4.5mm; margin-left: auto; width: 88mm; }
+  .totals .row { display: flex; justify-content: space-between; padding: 1.2mm 0; font-size: 10.5px; color: #4a463e; }
+  .totals .row.total { border-top: 1.5px solid var(--accent); margin-top: 1.8mm; padding-top: 2.5mm; font-family: 'LFSerif', Georgia, 'DejaVu Serif', serif; font-size: 14.5px; font-weight: 700; color: var(--ink); }
+  .totals .row.total span:last-child { color: var(--accent-deep); }
+  .totals .row.monthly { font-weight: 700; color: var(--ink); }
 
-  .notes { margin-top: 6mm; background: #fbf6ef; border-left: 3px solid #a9743f; padding: 4mm 5mm; border-radius: 0 9px 9px 0; font-size: 10.5px; color: #5b4637; }
-  .notes li { margin: 1.5mm 0 1.5mm 4mm; }
+  .notes { margin-top: 6mm; background: var(--surface); border: 1px solid var(--line); border-bottom: 2.5px solid var(--accent); border-radius: 10px; padding: 4mm 5mm; }
+  .notes ul { margin-top: 2mm; }
+  .notes li { margin: 1.1mm 0 1.1mm 4mm; font-size: 9.5px; line-height: 1.55; color: #4a463e; }
 
-  .footer { position: absolute; bottom: 11mm; left: 16mm; right: 16mm; border-top: 1px solid #e5e7eb; padding-top: 4mm; display: flex; justify-content: space-between; color: #9ca3af; font-size: 10px; }
+  .footer { position: absolute; bottom: 10mm; left: 15mm; right: 15mm; border-top: 1px solid var(--line); padding-top: 3mm; display: flex; justify-content: space-between; color: var(--muted); font-size: 9px; }
 </style>
 </head>
 <body>
   <div class="page">
-    <div class="header">
+
+    <div class="head">
       <div class="brand">
-        <h1>Andrijus</h1>
+        <div class="wordmark">Andri<b>jus</b></div>
         <div class="tagline">Web design, sviluppo &amp; automazione aziendale con AI</div>
       </div>
       <div class="doc">
-        <h2>Preventivo</h2>
-        <div class="docno">N. LF-2026-001 &middot; 15 agosto 2026</div>
+        <div class="kind">Preventivo</div>
+        <div class="ref">N. LF-2026-001</div>
+        <div class="date">18 agosto 2026</div>
       </div>
+      <div class="rule"></div>
+    </div>
+
+    <div class="intro">
+      <div class="eyebrow">La nostra proposta</div>
+      <div class="greeting">Gentile Passelli Srl,</div>
+      <div class="statement">Un sito nuovo che trasforma chi guarda in chi chiama, e un assistente AI che risponde 24/7 — con un investimento di partenza contenuto, che cresce solo con la complessità del progetto.</div>
+      <div class="note">Vi scriviamo perché il vostro lavoro parla da sé: porte, vetrate e serramenti che non sfigurerebbero in nessuna casa di pregio. Ma un sito fermo a un template del 2017 non lo dice a nessuno — e sui Google di chi cerca «infissi Trieste», intanto, la concorrenza risponde sempre. Vi proponiamo un restyling moderno e un assistente AI per i vostri clienti: due mosse concrete, senza parole vuote.</div>
     </div>
 
     <div class="meta">
-      <div class="block">
-        <h3>Preparato per</h3>
-        <p><strong>Passelli Srl</strong><br/>Sgonico (Trieste)</p>
-        <p class="url">passelli.com</p>
+      <div class="cell">
+        <div class="k">Preparato per</div>
+        <div class="v"><strong>Passelli Srl</strong><small>Infissi e serramenti · Sgonico (Trieste)</small></div>
       </div>
-      <div class="block">
-        <h3>Contatti</h3>
-        <p>andrijusciric@gmail.com<br/>—</p>
+      <div class="cell">
+        <div class="k">Il sito di oggi</div>
+        <div class="v accent">Template 2017, 6 foto su 7 senza descrizione, nessun modo strutturato di richiedere un preventivo</div>
       </div>
-    </div>
-
-    <h3 class="section">La proposta in una frase</h3>
-    <p class="lead em" style="font-size:12.5px;color:#111827;">Un sito più moderno che trasforma le visite in richieste, e un assistente AI che risponde 24/7 al posto vostro — con un investimento di partenza contenuto che cresce solo con la complessità del progetto.</p>
-
-    <h3 class="section">Cosa cambia per voi</h3>
-    <div class="costi">
-      <div class="card neg">
-        <div class="n">h24/7</div>
-        <div class="k">di domande su tempi, garanzie e detrazioni che oggi restano senza risposta fuori orario.</div>
-      </div>
-      <div class="card neg">
-        <div class="n">2-3 gg</div>
-        <div class="k">di attesa tipica per un preventivo, mentre il cliente medio confronta 3 concorrenti.</div>
-      </div>
-      <div class="card pos">
-        <div class="n">AI</div>
-        <div class="k">un assistente che qualifica, risponde, raccoglie le misure e passa il caso al team solo quando serve.</div>
+      <div class="cell">
+        <div class="k">Contatti</div>
+        <div class="v">andrijusciric@gmail.com<small>Andrijus · Web design, sviluppo &amp; AI</small></div>
       </div>
     </div>
 
-    <h3 class="section">Nuova direzione grafica</h3>
-    <p class="lead em" style="font-size:12px;">«Artigiano premium»: fondo antracite profondo, accento rame/bronzo in eco dei profili in legno, tipografia editoriale. La direzione che oggi distingue i serramentisti di fascia alta in Europa.</p>
-    <div class="preview">
-      <div class="bar"></div>
-      <div class="mock">
-        <div class="mock-nav"><strong>PASSELLI</strong><span>PRODOTTI&nbsp;&nbsp;PROGETTI&nbsp;&nbsp;CONTATTI</span><b>Preventivo gratuito</b></div>
-        <div class="mock-hero">
-          <div class="kicker">Infissi · Serramenti · Trieste</div>
-          <h4>Il confine tra casa e paesaggio, senza compromessi.</h4>
-          <p>Alluminio e legno/alluminio su misura. Posa a regola d'arte, garanzie e detrazioni gestite per te.</p>
-          <span class="cta">Richiedi un sopralluogo</span>
-          <div class="window"></div>
+    <div class="sec">
+      <div class="eyebrow">Nuova direzione grafica</div>
+      <div class="title">«Artigiano premium» — un sito che sembra fatto a mano, pensato come il prodotto che vendete. Quattro scelte coerenti lo differenziano dai template dei concorrenti:</div>
+      <div class="dirs">
+        <div class="dir">
+          <div class="k">Palette</div>
+          <div class="v">Antracite profondo e rame/bronzo, in eco dei profili in legno e alluminio: calda, autorevole, mai piatta.</div>
         </div>
-        <div class="mock-prods">
-          <div class="mock-card"><div class="pic"></div><h5>Serramenti in alluminio</h5><span>Minimal, sottili, sicuri</span></div>
-          <div class="mock-card alt"><div class="pic"></div><h5>Legno/alluminio</h5><span>Calore dentro, resistenza fuori</span></div>
-          <div class="mock-card"><div class="pic"></div><h5>Sistemi oscuranti</h5><span>Scorrevoli e tapparelle</span></div>
+        <div class="dir">
+          <div class="k">Tipografia</div>
+          <div class="v">Serif editoriale nei titoli, sans nel testo, mono per numeri e didascalie: gerarchia pulita che trasmette cura.</div>
+        </div>
+        <div class="dir">
+          <div class="k">Immagini</div>
+          <div class="v">I vostri progetti in primo piano, senza foto commerciali di stock: chi guarda capisce subito che cosa sapete fare.</div>
+        </div>
+        <div class="dir">
+          <div class="k">Comportamento</div>
+          <div class="v">Menu ridotto a 5 voci, CTA «sopralluogo» sempre visibile, galleria progetti e richiesta preventivo a un tocco, mobile-first.</div>
         </div>
       </div>
-      <div class="legend">Anteprima della nuova homepage: hero con CTA «sopralluogo», prodotti per categoria, percorso di conversione immediato verso l'assistente AI. Le foto definitive saranno tratte dai vostri progetti reali.</div>
+
+      <div class="preview">
+        <div class="bar"></div>
+        <div class="mock">
+          <div class="mock-nav">
+            <span class="mk">PASSELLI</span>
+            <span class="lv">PRODOTTI · PROGETTI · CONTATTI</span>
+            <span class="ghost">Preventivo gratuito</span>
+          </div>
+          <div class="mock-hero">
+            <div class="txt">
+              <div class="kicker">Infissi · Serramenti · Trieste</div>
+              <h4>Il confine tra casa e paesaggio, senza compromessi.</h4>
+              <p>Alluminio e legno/alluminio su misura. Posa a regola d'arte, garanzie e detrazioni agevolate gestite per voi.</p>
+              <div class="btns">
+                <span class="primary">Richiedi un sopralluogo</span>
+                <span class="link">Guarda i progetti</span>
+              </div>
+              <div class="proof"><b>●</b> su misura &nbsp;<b>●</b> posa a regola d'arte &nbsp;<b>●</b> agevolazioni e detrazioni</div>
+            </div>
+            <div class="scene">
+              <svg viewBox="0 0 300 244" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Vetrata su golfo di Trieste">
+                <defs>
+                  <linearGradient id="psky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#223047"/>
+                    <stop offset=".5" stop-color="#4c5f83"/>
+                    <stop offset=".8" stop-color="#b07a4a"/>
+                    <stop offset="1" stop-color="#6d5a4a"/>
+                  </linearGradient>
+                  <radialGradient id="psun" cx=".72" cy=".3" r=".5">
+                    <stop offset="0" stop-color="#ffe3ad"/>
+                    <stop offset=".45" stop-color="#ffd9a0" stop-opacity=".55"/>
+                    <stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="psea" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#8aa3bd"/>
+                    <stop offset="1" stop-color="#3f546f"/>
+                  </linearGradient>
+                  <linearGradient id="pwarm" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#f5d9a8" stop-opacity=".5"/>
+                    <stop offset="1" stop-color="#f5d9a8" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <clipPath id="pglass"><rect x="0" y="0" width="300" height="244" rx="6"/></clipPath>
+                <g clip-path="url(#pglass)">
+                  <rect width="300" height="244" fill="url(#psky)"/>
+                  <rect width="300" height="244" fill="url(#psun)"/>
+                  <path d="M0 196 L300 196 L300 202 L0 202 Z" fill="url(#pwarm)"/>
+                  <rect y="206" width="300" height="70" fill="url(#psea)"/>
+                  <path d="M0 236 L300 236 L300 240 L0 240 Z" fill="#edf2f6" fill-opacity=".5"/>
+                  <path d="M0 202 Q 40 188 86 196 T 180 194 T 300 200 L300 210 L0 210 Z" fill="#3a4a5e"/>
+                  <path d="M0 208 Q 50 200 110 206 T 240 204 L300 208 L300 214 L0 214 Z" fill="#2c3a50"/>
+                  <g fill="#28344a">
+                    <rect x="150" y="200" width="26" height="9"/><rect x="182" y="198" width="20" height="11"/>
+                    <rect x="210" y="200" width="24" height="9"/><rect x="240" y="197" width="18" height="12"/>
+                    <rect x="262" y="200" width="22" height="9"/><rect x="120" y="202" width="22" height="7"/>
+                  </g>
+                  <g fill="#1f2c40">
+                    <path d="M150 200 l8 -6 l8 6 Z"/><path d="M210 200 l8 -6 l8 6 Z"/><path d="M262 200 l7 -5 l7 5 Z"/>
+                  </g>
+                  <g fill="#f4d9a6">
+                    <circle cx="186" cy="204" r="1"/><circle cx="216" cy="203" r="1"/><circle cx="248" cy="202" r="1"/><circle cx="270" cy="204" r="1"/><circle cx="158" cy="204" r="1"/>
+                  </g>
+                  <path d="M24 34 L70 34 L54 96 L8 96 Z" fill="rgba(255,255,255,.10)"/>
+                  <path d="M96 210 L136 210 L120 244 L80 244 Z" fill="rgba(255,255,255,.14)"/>
+                  <path d="M0 0 L300 0 L300 5 L0 5 Z" fill="#0f1826" fill-opacity=".28"/>
+                  <path d="M0 0 L0 244 L5 244 L5 0 Z" fill="#0f1826" fill-opacity=".28"/>
+                </g>
+                <rect x="0" y="0" width="300" height="244" rx="6" fill="none" stroke="rgba(255,255,255,.28)"/>
+                <line x1="92" y1="0" x2="92" y2="244" stroke="#9a7448" stroke-width="5"/>
+                <line x1="94.5" y1="0" x2="94.5" y2="244" stroke="#fff" stroke-opacity=".15" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="mock-prods">
+            <div class="mock-card">
+              <div class="pic">
+                <svg viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Serramento in alluminio">
+                  <defs>
+                    <linearGradient id="aglass" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#dfe6ef"/>
+                      <stop offset="1" stop-color="#9fb1c4"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="100" height="70" fill="#f4f5f6"/>
+                  <rect x="6" y="6" width="88" height="58" rx="3" fill="url(#aglass)"/>
+                  <path d="M60 10 Q 66 22 72 40 Q 66 30 62 20 Z" fill="#fff" fill-opacity=".5"/>
+                  <line x1="6" y1="6" x2="94" y2="6" stroke="#6d7076" stroke-width="5"/>
+                  <line x1="6" y1="64" x2="94" y2="64" stroke="#6d7076" stroke-width="5"/>
+                  <line x1="6" y1="6" x2="6" y2="64" stroke="#6d7076" stroke-width="5"/>
+                  <line x1="94" y1="6" x2="94" y2="64" stroke="#6d7076" stroke-width="5"/>
+                  <line x1="50" y1="8.5" x2="50" y2="61.5" stroke="#7c7f85" stroke-width="2.5"/>
+                  <line x1="52" y1="9" x2="52" y2="61" stroke="#cfd0d3" stroke-width="1"/>
+                </svg>
+              </div>
+              <h5>Serramenti in alluminio</h5>
+              <span>Minimal, sottili, sicuri</span>
+            </div>
+            <div class="mock-card">
+              <div class="pic">
+                <svg viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Serramento in legno/alluminio">
+                  <defs>
+                    <linearGradient id="wglass" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#f4efdf"/>
+                      <stop offset="1" stop-color="#cdbf9a"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="100" height="70" fill="#f3eee4"/>
+                  <rect x="6" y="6" width="88" height="58" rx="3" fill="url(#wglass)"/>
+                  <path d="M14 8 Q 30 18 44 12" stroke="#e9dfc6" stroke-width="1.5" fill="none"/>
+                  <path d="M14 10 Q 30 20 44 14" stroke="#e0d4b6" stroke-width="1" fill="none"/>
+                  <line x1="6" y1="6" x2="94" y2="6" stroke="#8a5f2e" stroke-width="6"/>
+                  <line x1="6" y1="64" x2="94" y2="64" stroke="#8a5f2e" stroke-width="6"/>
+                  <line x1="6" y1="9" x2="6" y2="61" stroke="#6f4c24" stroke-width="6"/>
+                  <line x1="94" y1="7" x2="94" y2="63" stroke="#9a7342" stroke-width="5"/>
+                  <line x1="50" y1="8.5" x2="50" y2="61.5" stroke="#8a5f2e" stroke-width="3"/>
+                </svg>
+              </div>
+              <h5>Legno / alluminio</h5>
+              <span>Calore dentro, resistenza fuori</span>
+            </div>
+            <div class="mock-card">
+              <div class="pic">
+                <svg viewBox="0 0 100 70" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sistemi oscuranti">
+                  <defs>
+                    <linearGradient id="slat" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#54545c"/>
+                      <stop offset="1" stop-color="#34343b"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="100" height="70" fill="#f0eef0"/>
+                  <g fill="url(#slat)">
+                    <rect x="8" y="6" width="40" height="6.5" rx="1.5"/>
+                    <rect x="8" y="15" width="40" height="6.5" rx="1.5"/>
+                    <rect x="8" y="24" width="40" height="6.5" rx="1.5"/>
+                    <rect x="8" y="33" width="40" height="6.5" rx="1.5"/>
+                    <rect x="8" y="42" width="40" height="6.5" rx="1.5"/>
+                    <rect x="8" y="51" width="40" height="6.5" rx="1.5"/>
+                    <rect x="8" y="60" width="40" height="6.5" rx="1.5"/>
+                  </g>
+                  <rect x="52" y="6" width="42" height="58" rx="3" fill="#bfc6ce"/>
+                  <path d="M58 12 Q 66 24 72 40" stroke="#fff" stroke-opacity=".6" stroke-width="2" fill="none"/>
+                  <line x1="52" y1="6" x2="94" y2="6" stroke="#3a3a40" stroke-width="4"/>
+                  <line x1="52" y1="64" x2="94" y2="64" stroke="#3a3a40" stroke-width="4"/>
+                  <line x1="52" y1="8" x2="52" y2="62" stroke="#48484f" stroke-width="4"/>
+                </svg>
+              </div>
+              <h5>Sistemi oscuranti</h5>
+              <span>Scorrevoli e tapparelle</span>
+            </div>
+          </div>
+        </div>
+        <div class="legend">Anteprima ad alta fedeltà della nuova homepage: hero con vetrata sul golfo di Trieste, menu ridotto, CTA «sopralluogo» sempre visibile e prodotti per categoria. Le foto definitive saranno tratte dai vostri cantieri reali.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="sec">
+      <div class="eyebrow">Cosa cambia per voi</div>
+      <div class="title">I tre risultati che contano, subito</div>
+      <div class="cards">
+        <div class="card">
+          <div class="n">h24/7</div>
+          <div class="k">di domande su tempi, garanzie e detrazioni che oggi restano senza risposta fuori orario — la maggior parte dei contatti arriva proprio dopo le 18.</div>
+        </div>
+        <div class="card">
+          <div class="n">2–3 gg</div>
+          <div class="k">di attesa tipica per un preventivo, mentre il cliente medio confronta tre concorrenti nella stessa settimana.</div>
+        </div>
+        <div class="card pos">
+          <div class="n">Un assistente AI</div>
+          <div class="k">che risponde, qualifica, raccoglie misure e tempi di posa, e passa al vostro team solo il caso che vale la pena seguire.</div>
+        </div>
+      </div>
     </div>
 
-    <h3 class="section">Servizi inclusi</h3>
-    <table class="services">
-      <thead><tr><th>Servizio</th><th style="text-align:left;">Cosa fa per voi</th><th>Importo</th><th>Cadenza</th></tr></thead>
-      <tbody>
-        <tr>
-          <td class="name">Assistente AI processi interni</td>
-          <td class="desc">Risponde a domande frequenti, qualifica i lead, raccoglie misure, fissa e ricorda sopralluoghi e posa via email/WhatsApp; traccia ogni caso fino alla chiusura</td>
-          <td class="price">€ 50,00</td>
-          <td class="unit">al mese</td>
-        </tr>
-        <tr>
-          <td class="name">Restyling sito web</td>
-          <td class="desc">Nuova grafica «Artigiano premium», mobile-first, galleria progetti, modulo richiesta preventivo collegato all'assistente AI, migrazione a GA4</td>
-          <td class="price">da € 200,00</td>
-          <td class="unit">una tantum</td>
-        </tr>
-        <tr>
-          <td class="name">Ottimizzazione SEO</td>
-          <td class="desc">Schema LocalBusiness, testo alternativo immagini, tag localizzati «infissi Trieste», parole long-tail del settore e approfondimento SEO locale</td>
-          <td class="price">€ 150,00</td>
-          <td class="unit">una tantum</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="sec">
+      <div class="eyebrow">Servizi inclusi</div>
+      <div class="title">Cosa facciamo per voi</div>
+      <table class="services">
+        <thead><tr><th>Servizio</th><th>Cosa fa per voi</th><th style="text-align:right;">Importo</th><th style="text-align:right;width:20mm;">Cadenza</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="name">Assistente AI + hosting &amp; gestione</td>
+            <td class="desc">Assistente che risponde alle domande frequenti, qualifica i lead, raccoglie misure e ricorda sopralluoghi e posa via email/WhatsApp. Inclusi hosting, manutenzione, aggiornamenti e sicurezza del sito</td>
+            <td class="price">da € 50,00</td>
+            <td class="unit">al mese</td>
+          </tr>
+          <tr>
+            <td class="name">Restyling sito web</td>
+            <td class="desc">Nuova grafica «Artigiano premium», mobile-first, galleria progetti, modulo richiesta preventivo collegato all'assistente AI, migrazione a GA4</td>
+            <td class="price">da € 200,00</td>
+            <td class="unit">una tantum</td>
+          </tr>
+          <tr>
+            <td class="name">Ottimizzazione SEO</td>
+            <td class="desc">Schema LocalBusiness, testo alternativo delle immagini, tag localizzati «infissi Trieste», parole long-tail del settore e approfondimento SEO locale</td>
+            <td class="price">€ 150,00</td>
+            <td class="unit">una tantum</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="totals">
-      <div class="row sub"><span>Restyling (da €200) + SEO</span><span>da € 350,00</span></div>
-      <div class="row sub"><span>IVA (22%)</span><span>da € 77,00</span></div>
+      <div class="row"><span>Restyling (da €200) + SEO</span><span>da € 350,00</span></div>
+      <div class="row"><span>IVA (22%)</span><span>da € 77,00</span></div>
       <div class="row total"><span>Totale progetto</span><span>da € 427,00</span></div>
-      <div class="row monthly"><span>Assistente AI processi interni</span><span>€ 50,00/mese</span></div>
+      <div class="row monthly"><span>Assistente AI + hosting &amp; gestione</span><span>da € 50,00/mese</span></div>
     </div>
 
     <div class="notes">
-      <strong>Incluso e condizioni:</strong>
+      <div class="ntitle">Incluso e condizioni</div>
       <ul>
-        <li>Il canone mensile dell'assistente copre un numero ragionevole di richieste; volumi eccezionali vengono rivalutati.</li>
+        <li>Il canone mensile (da €50) parte da un assistente AI con hosting e manutenzione del sito per un numero ragionevole di richieste e visite; volumi o funzionalità aggiuntive vengono rivalutati.</li>
         <li>Pagamento 50% a inizio progetto, 50% al rilascio. Il primo mese dell'assistente AI è incluso.</li>
-        <li>Contenuti e foto di progetto forniti da Passelli o prodotti in collaborazione. Tempi indicativi: 3-4 settimane per v1.</li>
+        <li>Contenuti e foto di progetto forniti da Passelli o prodotti in collaborazione. Tempi indicativi: 3–4 settimane per la v1.</li>
       </ul>
     </div>
 
     <div class="footer">
-      <span>Andrijus &middot; https://andrijus.example.com</span>
-      <span>Validità offerta: 30 giorni</span>
+      <span>Andrijus · https://andrijus.example.com</span>
+      <span>Validità offerta: 30 giorni · andrijusciric@gmail.com</span>
     </div>
+
   </div>
 </body>
 </html>

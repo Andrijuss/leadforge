@@ -1,0 +1,6 @@
+Questo è il comando che sostituisce il pulsante "Choose folder" (che non funziona da remoto perché apre un dialogo nativo):
+curl -s -X POST http://127.0.0.1:8084/api/import/folder \
+  -H 'content-type: application/json' \
+  -d '{"baseDir":"/opt/leadforge"}'
+Risposta con l'id del progetto creato:
+{"project":{"id":"7964f4ae-...","name":"leadforge","metadata":{"baseDir":"/opt/leadforge","importedFrom":"folder",...}}}

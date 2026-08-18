@@ -84,6 +84,33 @@ Raccomandazione già data (metti in preventivo un canone **piatto**):
 
 ## Cosa fare adesso (prossimi passi)
 
+0. ✅ **FATTO 2026-08-18 — RI-DESIGN del preventivo** — nuovo template
+   `templates/quote-template-modern.html` (palette carta calda + rame/bronzo,
+   serif editoriale, layout "accogliente"). `quote.html` riscritto: 2 pagine A4,
+   direzione grafica dettagliata (4 card: palette/tipografia/immagini/
+   comportamento), anteprima homepage con scene SVG (vetrata sul golfo di
+   Trieste + 3 card prodotto). **Canone mensile ampliato**: ora "Assistente AI +
+   hosting & gestione — **da €50/mese**" (era €50/mese). Restyling da €200, SEO
+   €150, totali da €427 invariati. `quote.pdf` NON rigenerato: mancano le lib
+   Chromium (rebuild via `apt-get download` non eseguito — proposta rifiutata in
+   sessione). Da rigenerare alla review.
+
+1. ✅ **FATTO 2026-08-18 — GENERAZIONE IMMAGINI REALI** — nuovo script
+   `scripts/gen-image.mjs` (Cloudflare Workers AI, free tier ~230 img/giorno,
+   modello default `@cf/black-forest-labs/flux-1-schnell`). Credenziali in
+   `.env`: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`,
+   `CLOUDFLARE_IMAGE_MODEL`. Uso: `node scripts/gen-image.mjs "<prompt>"
+   --client <nome> [--model <id>] [--aspect 16:9] [--width/--height]`
+   (oppure `npm run image`). Le immagini vengono salvate in
+   `data/clients/<nome>/images/` (cartella `images` per cliente, visionabile da
+   browser). Generato per Passelli un set di **6 foto eleganti e coerenti**
+   (ingresso ferro battuto, vetrate sul golfo, porte scorrevoli alluminio,
+   facciata con oscuranti, cucina legno/alluminio, soggiorno) in
+   `data/clients/passelli-com/images/` — da usare come **asset fotografici**
+   nel nuovo design (attenzione: i modelli text-to-image scrivono male il testo
+   UI, quindi per la "screenshot" del sito resta il mockup HTML; le foto AI
+   arricchiscono hero e sezioni).
+
 1. ✅ **FATTO — PREZZI e RISCRITTURA** — `email.html` riscritta (design pulito,
    copy più umana, oggetto "Passelli su Google: le foto che vendono non si
    trovano"), `quote.html`/`quote.pdf` aggiornati con i nuovi prezzi e design

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "data/clients/passelli-com/quote.html",
+  "entry": "data/clients/passelli-com/quote.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-08-18T07:16:10.467Z",
+  "updatedAt": "2026-08-18T07:16:10.467Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

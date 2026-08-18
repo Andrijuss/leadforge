@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "templates/quote-template-modern.html",
+  "entry": "templates/quote-template-modern.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-08-18T07:15:06.919Z",
+  "updatedAt": "2026-08-18T07:15:06.919Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

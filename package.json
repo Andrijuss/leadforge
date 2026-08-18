@@ -12,6 +12,7 @@
     "screenshot": "node scripts/screenshot.mjs",
     "pdf": "node scripts/html2pdf.mjs",
     "send": "node scripts/send.mjs",
+    "image": "node scripts/gen-image.mjs",
     "backup": "bash scripts/backup.sh",
     "client:new": "node scripts/client-new.mjs"
   },
